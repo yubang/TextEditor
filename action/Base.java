@@ -1,7 +1,9 @@
 package action;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 public class Base {
 	
@@ -18,6 +20,16 @@ public class Base {
 		}
 		catch(Exception error){}
 		return builder.toString();
+	}
+	
+	public static boolean writeToFile(String path,String text){
+		try{
+			BufferedWriter out = new BufferedWriter(new FileWriter(path)); 
+			out.write(text);
+			out.close();
+		}
+		catch(Exception error){return false;}
+		return true;
 	}
 	
 }
