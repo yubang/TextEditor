@@ -11,19 +11,26 @@ public class Frame {
 	private javax.swing.JTextArea textArea;
 	private javax.swing.JScrollPane scrollPane;
 	private javax.swing.JMenuBar menuBar;
-	private javax.swing.JMenu menu1;
-	private javax.swing.JMenuItem item1, item2, item3, item4;
-
+	private javax.swing.JMenu menu1, menu2, menu3;
+	private javax.swing.JMenuItem item1, item2, item3, item4, item5, item6;
+	private FontFrame fontFrame;
+	
 	public Frame() {
 		this.setFrame();
 		this.setMenu();
 		this.addListener();
 		frame.setVisible(true);
+		
+		fontFrame=new FontFrame(textArea);
+		
 	}
 
 	private void setMenu() {
+
 		menuBar = new javax.swing.JMenuBar();
 		menu1 = new javax.swing.JMenu("文件");
+		menu2 = new javax.swing.JMenu("编辑");
+		menu3 = new javax.swing.JMenu("格式");
 
 		item1 = new javax.swing.JMenuItem("打开文件");
 		item2 = new javax.swing.JMenuItem("保存文件");
@@ -35,7 +42,14 @@ public class Frame {
 		menu1.add(item3);
 		menu1.add(item4);
 
+		item5 = new javax.swing.JMenuItem("自动换行");
+		item6 = new javax.swing.JMenuItem("字体");
+		menu3.add(item5);
+		menu3.add(item6);
+
 		menuBar.add(menu1);
+		menuBar.add(menu2);
+		menuBar.add(menu3);
 		frame.setJMenuBar(menuBar);
 	}
 
@@ -77,17 +91,17 @@ public class Frame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(action.Base.openFilePath==null){
-					javax.swing.JOptionPane.showMessageDialog(null,
-							"还没有打开文件！");
-				}else{
-					
-					if (action.Base.writeToFile(action.Base.openFilePath, textArea.getText())) {
-						javax.swing.JOptionPane.showMessageDialog(null,
-								"保存成功！");
+				if (action.Base.openFilePath == null) {
+					javax.swing.JOptionPane.showMessageDialog(null, "还没有打开文件！");
+				} else {
+
+					if (action.Base.writeToFile(action.Base.openFilePath,
+							textArea.getText())) {
+						javax.swing.JOptionPane
+								.showMessageDialog(null, "保存成功！");
 					} else {
-						javax.swing.JOptionPane.showMessageDialog(null,
-								"保存失败！");
+						javax.swing.JOptionPane
+								.showMessageDialog(null, "保存失败！");
 					}
 				}
 			}
@@ -130,6 +144,35 @@ public class Frame {
 			}
 		});
 
+		// 换行事件
+		item5.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (item5.getText().equals("自动换行")) {
+					item5.setText("不自动换行");
+					textArea.setLineWrap(true);
+					textArea.setWrapStyleWord(true);
+				} else {
+					item5.setText("自动换行");
+					textArea.setLineWrap(false);
+					textArea.setWrapStyleWord(false);
+				}
+			}
+
+		});
+
+		// 设置字体事件
+		item6.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				fontFrame.setVisible(true);
+			}
+		});
+		
 	}
 
 	public static void main(String[] args) {
