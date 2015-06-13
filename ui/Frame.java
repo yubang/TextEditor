@@ -18,7 +18,7 @@ public class Frame {
 	private javax.swing.JMenuBar menuBar;
 	private javax.swing.JMenu menu1, menu2, menu3, menu4;
 	private javax.swing.JMenuItem item1, item2, item3, item4, item5, item6,
-			item7, item8, item9, item10, item11;
+			item7, item8, item9, item10, item11, item12;
 	private FontFrame fontFrame;
 	private About about;
 
@@ -62,10 +62,12 @@ public class Frame {
 		item9 = new javax.swing.JMenuItem("复制");
 		item10 = new javax.swing.JMenuItem("粘贴");
 		item11 = new javax.swing.JMenuItem("删除");
+		item12 = new javax.swing.JMenuItem("全选");
 		menu2.add(item8);
 		menu2.add(item9);
 		menu2.add(item10);
 		menu2.add(item11);
+		menu2.add(item12);
 
 		menuBar.add(menu1);
 		menuBar.add(menu2);
@@ -274,6 +276,16 @@ public class Frame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				textArea.replaceSelection("");
+			}
+		});
+
+		// 全选
+		item12.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				textArea.select(0, textArea.getText().length());
 			}
 		});
 
