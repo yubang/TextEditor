@@ -1,11 +1,14 @@
 package ui;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JTextArea;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class FontFrame extends JFrame{
 	
@@ -23,7 +26,8 @@ public class FontFrame extends JFrame{
 		
 		this.setLayout(new GridLayout(1,3));
 		this.addLists();
-		this.setVisible(true);
+		this.addListener();
+		
 	}
 	
 	private void addLists(){
@@ -52,6 +56,33 @@ public class FontFrame extends JFrame{
 		this.add(list1);
 		this.add(list2);
 		this.add(list3);
+	}
+	
+	public void addListener(){
+		list1.addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				textArea.setFont(new Font(m3.get(list3.getSelectedIndex()),list2.getSelectedIndex(),Integer.parseInt(m1.get(list1.getSelectedIndex()))));
+				
+			}});
+		list2.addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				textArea.setFont(new Font(m3.get(list3.getSelectedIndex()),list2.getSelectedIndex(),Integer.parseInt(m1.get(list1.getSelectedIndex()))));
+				
+			}});
+		list3.addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				textArea.setFont(new Font(m3.get(list3.getSelectedIndex()),list2.getSelectedIndex(),Integer.parseInt(m1.get(list1.getSelectedIndex()))));
+				
+			}});
 	}
 	
 }

@@ -11,9 +11,10 @@ public class Frame {
 	private javax.swing.JTextArea textArea;
 	private javax.swing.JScrollPane scrollPane;
 	private javax.swing.JMenuBar menuBar;
-	private javax.swing.JMenu menu1, menu2, menu3;
-	private javax.swing.JMenuItem item1, item2, item3, item4, item5, item6;
+	private javax.swing.JMenu menu1, menu2, menu3,menu4;
+	private javax.swing.JMenuItem item1, item2, item3, item4, item5, item6,item7;
 	private FontFrame fontFrame;
+	private About about; 
 	
 	public Frame() {
 		this.setFrame();
@@ -22,7 +23,7 @@ public class Frame {
 		frame.setVisible(true);
 		
 		fontFrame=new FontFrame(textArea);
-		
+		about=new About();
 	}
 
 	private void setMenu() {
@@ -31,6 +32,7 @@ public class Frame {
 		menu1 = new javax.swing.JMenu("文件");
 		menu2 = new javax.swing.JMenu("编辑");
 		menu3 = new javax.swing.JMenu("格式");
+		menu4 = new javax.swing.JMenu("帮助");
 
 		item1 = new javax.swing.JMenuItem("打开文件");
 		item2 = new javax.swing.JMenuItem("保存文件");
@@ -47,9 +49,13 @@ public class Frame {
 		menu3.add(item5);
 		menu3.add(item6);
 
+		item7 = new javax.swing.JMenuItem("关于");
+		menu4.add(item7);
+		
 		menuBar.add(menu1);
 		menuBar.add(menu2);
 		menuBar.add(menu3);
+		menuBar.add(menu4);
 		frame.setJMenuBar(menuBar);
 	}
 
@@ -172,6 +178,16 @@ public class Frame {
 				fontFrame.setVisible(true);
 			}
 		});
+		
+		// 关于
+				item7.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						about.setVisible(true);
+					}
+				});
 		
 	}
 
