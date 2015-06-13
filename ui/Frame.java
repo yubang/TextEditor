@@ -1,6 +1,11 @@
 package ui;
 
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -11,19 +16,20 @@ public class Frame {
 	private javax.swing.JTextArea textArea;
 	private javax.swing.JScrollPane scrollPane;
 	private javax.swing.JMenuBar menuBar;
-	private javax.swing.JMenu menu1, menu2, menu3,menu4;
-	private javax.swing.JMenuItem item1, item2, item3, item4, item5, item6,item7;
+	private javax.swing.JMenu menu1, menu2, menu3, menu4;
+	private javax.swing.JMenuItem item1, item2, item3, item4, item5, item6,
+			item7, item8, item9, item10, item11;
 	private FontFrame fontFrame;
-	private About about; 
-	
+	private About about;
+
 	public Frame() {
 		this.setFrame();
 		this.setMenu();
 		this.addListener();
 		frame.setVisible(true);
-		
-		fontFrame=new FontFrame(textArea);
-		about=new About();
+
+		fontFrame = new FontFrame(textArea);
+		about = new About();
 	}
 
 	private void setMenu() {
@@ -51,7 +57,16 @@ public class Frame {
 
 		item7 = new javax.swing.JMenuItem("关于");
 		menu4.add(item7);
-		
+
+		item8 = new javax.swing.JMenuItem("剪切");
+		item9 = new javax.swing.JMenuItem("复制");
+		item10 = new javax.swing.JMenuItem("粘贴");
+		item11 = new javax.swing.JMenuItem("删除");
+		menu2.add(item8);
+		menu2.add(item9);
+		menu2.add(item10);
+		menu2.add(item11);
+
 		menuBar.add(menu1);
 		menuBar.add(menu2);
 		menuBar.add(menu3);
@@ -178,17 +193,90 @@ public class Frame {
 				fontFrame.setVisible(true);
 			}
 		});
-		
-		// 关于
-				item7.addActionListener(new ActionListener() {
 
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						about.setVisible(true);
+		// 关于
+		item7.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				about.setVisible(true);
+			}
+		});
+
+		// 剪切
+		item8.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String text = textArea.getSelectedText();
+
+				// 写入剪贴板
+				Clipboard clip = Toolkit.getDefaultToolkit()
+						.getSystemClipboard();
+				Transferable tText = new StringSelection(text);
+				clip.setContents(tText, null);
+
+				// 删除选中文本
+				textArea.replaceSelection("");
+			}
+		});
+
+		// 复制
+		item9.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String text = textArea.getSelectedText();
+
+				// 写入剪贴板
+				Clipboard clip = Toolkit.getDefaultToolkit()
+						.getSystemClipboard();
+				Transferable tText = new StringSelection(text);
+				clip.setContents(tText, null);
+			}
+		});
+
+		// 粘贴
+		item10.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String ret = "";
+				Clipboard sysClip = Toolkit.getDefaultToolkit()
+						.getSystemClipboard();
+				// 获取剪切板中的内容
+				Transferable clipTf = sysClip.getContents(null);
+
+				if (clipTf != null) {
+					// 检查内容是否是文本类型
+					if (clipTf.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+						try {
+							ret = (String) clipTf
+									.getTransferData(DataFlavor.stringFlavor);
+						} catch (Exception error) {
+							// error.printStackTrace();
+						}
 					}
-				});
-		
+				}
+
+				textArea.replaceSelection(ret);
+			}
+		});
+
+		// 删除
+		item11.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				textArea.replaceSelection("");
+			}
+		});
+
 	}
 
 	public static void main(String[] args) {
