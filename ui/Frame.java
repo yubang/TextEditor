@@ -18,10 +18,11 @@ public class Frame {
 	private javax.swing.JMenuBar menuBar;
 	private javax.swing.JMenu menu1, menu2, menu3, menu4;
 	private javax.swing.JMenuItem item1, item2, item3, item4, item5, item6,
-			item7, item8, item9, item10, item11, item12;
+			item7, item8, item9, item10, item11, item12,item13;
 	private FontFrame fontFrame;
 	private About about;
-
+	private FindUi findUi;
+	
 	public Frame() {
 		this.setFrame();
 		this.setMenu();
@@ -30,6 +31,7 @@ public class Frame {
 
 		fontFrame = new FontFrame(textArea);
 		about = new About();
+		findUi=new FindUi(textArea);
 	}
 
 	private void setMenu() {
@@ -63,12 +65,16 @@ public class Frame {
 		item10 = new javax.swing.JMenuItem("粘贴");
 		item11 = new javax.swing.JMenuItem("删除");
 		item12 = new javax.swing.JMenuItem("全选");
+		item13 = new javax.swing.JMenuItem("查找");
 		menu2.add(item8);
 		menu2.add(item9);
 		menu2.add(item10);
 		menu2.add(item11);
 		menu2.add(item12);
+		menu2.add(item13);
 
+		
+		
 		menuBar.add(menu1);
 		menuBar.add(menu2);
 		menuBar.add(menu3);
@@ -288,7 +294,17 @@ public class Frame {
 				textArea.select(0, textArea.getText().length());
 			}
 		});
+		
+		// 查找
+				item13.addActionListener(new ActionListener() {
 
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						findUi.setVisible(true);
+					}
+				});
+		
 	}
 
 	public static void main(String[] args) {
