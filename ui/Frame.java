@@ -10,6 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.UndoManager;
+
 public class Frame {
 
 	private javax.swing.JFrame frame;
@@ -18,11 +22,13 @@ public class Frame {
 	private javax.swing.JMenuBar menuBar;
 	private javax.swing.JMenu menu1, menu2, menu3, menu4;
 	private javax.swing.JMenuItem item1, item2, item3, item4, item5, item6,
-			item7, item8, item9, item10, item11, item12, item13, item14;
+			item7, item8, item9, item10, item11, item12, item13, item14,
+			item15, item16;
 	private FontFrame fontFrame;
 	private About about;
 	private FindUi findUi;
 	private ReplaceUi replaceUi;
+	private UndoManager um;// 撤销管理类
 
 	public Frame() {
 		this.setFrame();
@@ -70,6 +76,10 @@ public class Frame {
 		item12 = new javax.swing.JMenuItem("全选");
 		item13 = new javax.swing.JMenuItem("查找");
 		item14 = new javax.swing.JMenuItem("替换");
+		item15 = new javax.swing.JMenuItem("撤销");
+		item16 = new javax.swing.JMenuItem("恢复");
+		menu2.add(item15);
+		menu2.add(item16);
 		menu2.add(item8);
 		menu2.add(item9);
 		menu2.add(item10);
@@ -316,6 +326,36 @@ public class Frame {
 				replaceUi.setVisible(true);
 			}
 		});
+
+		// 编辑撤销的监听
+		um = new UndoManager();
+		textArea.getDocument().addUndoableEditListener(
+				new UndoableEditListener() {// 注册撤销可编辑监听器
+					public void undoableEditHappened(UndoableEditEvent e) {
+						um.addEdit(e.getEdit());
+					}
+				});
+
+		// 撤销
+		item15.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				um.undo();
+			}
+		});
+
+		// 恢复
+		item16.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				um.redo();
+			}
+		});
+
 	}
 
 	public static void main(String[] args) {
